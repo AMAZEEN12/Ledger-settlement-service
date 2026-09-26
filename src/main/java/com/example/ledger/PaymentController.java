@@ -31,6 +31,8 @@ public class PaymentController {
         return ResponseEntity.created(location).build();
     }
 
+
+
     @GetMapping("/settlement")
     public ResponseEntity<?> getSettlement(
             @RequestParam String merchantId
@@ -38,5 +40,7 @@ public class PaymentController {
         long settlementReturned = settlementService.settlementCalculator(merchantId);
         return ResponseEntity.ok(new SettlementResponse(settlementReturned));
     }
+
+
 
 }

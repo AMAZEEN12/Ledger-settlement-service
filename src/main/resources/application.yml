@@ -8,6 +8,10 @@ spring:
     hibernate:
       ddl-auto: none
 
+  threads:
+    virtual:
+      enabled: true
+
   sql:
     init:
       mode: always

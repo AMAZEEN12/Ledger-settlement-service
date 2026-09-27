@@ -1,0 +1,7 @@
+.idea/
+target/
+node_modules/
+*.jfr
+!gc-baseline.jfr
+!gc-tuned.jfr
+fixed.jfr

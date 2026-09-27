@@ -10,9 +10,14 @@ import java.util.UUID;
 @Service
 public class SettlementService {
     private final PaymentRepository paymentRepository;
+    private final FeeTierService feeTierService;
 
-      public SettlementService(PaymentRepository paymentRepository) {
+    public SettlementService(
+            PaymentRepository paymentRepository,
+            FeeTierService feeTierService
+    ) {
         this.paymentRepository = paymentRepository;
+        this.feeTierService = feeTierService;
     }
 
     @Transactional
@@ -37,7 +42,8 @@ public class SettlementService {
             throw new UnknownMerchantException("Merchant " + merchantId + " does not exist");
         }
         long total = payments.stream().mapToLong(PaymentEntity::getAmountMinor).sum();
-        long fee = (long) Math.floor(total * feeRate);
+
+        long fee = (long) Math.floor(total * feeTierService.rateFor("STANDARD"));
         return total - fee;
 
     }

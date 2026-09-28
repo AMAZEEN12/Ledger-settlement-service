@@ -3,13 +3,14 @@ package com.example.ledger;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 @Service
 public class FeeTierService {
 
     private final MerchantFeeTierClient merchantFeeTierClient;
-    private Map<String, Double> table;
+    private Map<String, BigDecimal> table;
 
     public FeeTierService(MerchantFeeTierClient merchantFeeTierClient) {
         this.merchantFeeTierClient = merchantFeeTierClient;
@@ -20,7 +21,7 @@ public class FeeTierService {
         table = merchantFeeTierClient.fetchFeeTiers();
     }
 
-    double rateFor(String tier) {
+    BigDecimal rateFor(String tier) {
         return table.getOrDefault(tier, table.get("STANDARD"));
     }
 }

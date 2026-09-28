@@ -2,6 +2,7 @@ package com.example.ledger;
 
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -23,16 +24,16 @@ public class FeeTierServiceTest {
         ExecutorService executor = Executors.newFixedThreadPool(20);
 
         try {
-            List<Callable<Double>> tasks = new ArrayList<>();
+            List<Callable<BigDecimal>> tasks = new ArrayList<>();
 
             for (int i = 0; i < 20; i++) {
                 tasks.add(() -> service.rateFor("STANDARD"));
             }
 
-            List<Future<Double>> results = executor.invokeAll(tasks);
+            List<Future<BigDecimal>> results = executor.invokeAll(tasks);
 
-            for (Future<Double> result : results) {
-                assertEquals(0.031, result.get());
+            for (Future<BigDecimal> result : results) {
+                assertEquals(new BigDecimal("0.031"), result.get());
             }
         } finally {
             executor.shutdown();

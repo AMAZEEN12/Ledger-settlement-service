@@ -3,6 +3,9 @@ package com.example.ledger;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -42,9 +45,10 @@ public class SettlementService {
             throw new UnknownMerchantException("Merchant " + merchantId + " does not exist");
         }
         long total = payments.stream().mapToLong(PaymentEntity::getAmountMinor).sum();
+        BigDecimal totalValue = new BigDecimal(total);
 
-        long fee = (long) Math.floor(total * feeTierService.rateFor("STANDARD"));
-        return total - fee;
+        BigDecimal fee = totalValue.multiply(feeTierService.rateFor("STANDARD")).setScale(0, RoundingMode.FLOOR);
+        return totalValue.subtract(fee).longValueExact();
 
     }
 

@@ -2,12 +2,13 @@ package com.example.ledger;
 
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 @Service
 public class MerchantFeeTierClient {
 
-    public Map<String, Double> fetchFeeTiers() {
+    public Map<String, BigDecimal> fetchFeeTiers() {
         try {
             Thread.sleep(3000); // simulates a slow call to a downstream fee-schedule service
         } catch (InterruptedException e) {
@@ -15,8 +16,8 @@ public class MerchantFeeTierClient {
         }
 
         return Map.of(
-                "STANDARD", 0.031,
-                "PREMIUM", 0.021
+                "STANDARD", new BigDecimal("0.031"),
+                "PREMIUM", new BigDecimal("0.021")
         );
     }
 }

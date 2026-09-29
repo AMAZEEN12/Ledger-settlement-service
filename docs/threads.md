@@ -157,3 +157,25 @@ The two JFR recordings produced for the exercise are:
 
 * `pinned.jfr` — contains the original `FeeTierTable.<clinit>` pinning event.
 * `fixed.jfr` — contains no `jdk.VirtualThreadPinned` events.
+
+## Pull Request Details
+
+### Title
+`feat(threads): migrate web layer to virtual threads and eliminate class initializer pinning defect`
+
+### Summary of Changes
+- Enabled Spring Boot virtual threads (`spring.threads.virtual.enabled=true` in `application.yml`).
+- Moved downstream fee-tier loading out of static initializer (`FeeTierTable.<clinit>`) to an eager `@PostConstruct` lifecycle method in `FeeTierService.java`.
+- Added unit test `FeeTierServiceTest.java` verifying concurrent thread safety.
+- Verified removal of carrier thread pinning (`fixed.jfr` reports 0 `jdk.VirtualThreadPinned` events).
+
+### Risk Assessment
+- **Low Risk**: The eager loading at application startup moves potential network latency to boot time rather than runtime requests. If downstream fee table service is unavailable at boot, startup fails early (fail-fast behavior).
+
+### Rollback Plan
+- To roll back virtual thread execution: set `spring.threads.virtual.enabled=false` in `application.yml` and restart the application.
+- To revert fee tier service changes: revert `FeeTierService.java` and re-enable static initializer loading if required.
+
+### Changed Lines Count
+- Total lines changed relative to `main`: **280 lines** (11 files changed, 278 insertions, 2 deletions), well under the 400 changed lines limit.
+

@@ -17,11 +17,11 @@ public class FeeTierService {
     }
 
     @PostConstruct
-    void load() {
+    public void load() {
         table = merchantFeeTierClient.fetchFeeTiers();
     }
 
-    BigDecimal rateFor(String tier) {
+    public BigDecimal rateFor(String tier) {
         return table.getOrDefault(tier, table.get("STANDARD"));
     }
 }

@@ -1,0 +1,16 @@
+dontinline,*.*_all_jmhStub
+dontinline,*.*_avgt_jmhStub
+dontinline,*.*_sample_jmhStub
+dontinline,*.*_ss_jmhStub
+dontinline,*.*_thrpt_jmhStub
+inline,com/example/ledger/benchmark/DceBenchmark.brokenDceDiscardResult
+inline,com/example/ledger/benchmark/DceBenchmark.calculateMethod
+inline,com/example/ledger/benchmark/DceBenchmark.fixedDceBlackhole
+inline,com/example/ledger/benchmark/DceBenchmark.fixedDceReturn
+inline,com/example/ledger/benchmark/DceBenchmark.setUp
+inline,com/example/ledger/benchmark/FeeTierBenchmark.benchMarkMeasurement
+inline,com/example/ledger/benchmark/FeeTierBenchmark.setUp
+inline,com/example/ledger/benchmark/SettlementBenchMark.benchmarkMeasurement
+inline,com/example/ledger/benchmark/SettlementBenchMark.setUp
+inline,com/example/ledger/benchmark/SettlementResponseBenchmark.benchmarkMeasurement
+inline,com/example/ledger/benchmark/SettlementResponseBenchmark.setUp
